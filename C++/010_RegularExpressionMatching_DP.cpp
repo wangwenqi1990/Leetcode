@@ -1,8 +1,9 @@
-#include <vector>
-#include <iostream>
-#include <string>
-using namespace std;
+#include "package_wwq.cpp"
 
+/*
+    Computational Complexity:   O(sp)
+    Space Complexity:           O(sp)
+*/
 class Solution {
 public:
     bool isMatch(string s, string p) {
@@ -37,5 +38,5 @@ public:
 int main(){
 	string s = "aaa";
 	string p = "ab*a*c*a";
-	cout << Solution().isMatch(s, p) << endl;
+    cout << Solution().isMatch(s, p) << endl;
 }
