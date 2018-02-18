@@ -11,6 +11,7 @@ public:
     // find the kth(not index but rank) from two arrays
     int findMedian2(vector<int>& nums1, vector<int>& nums2, int k){
         int l1 = nums1.size(), l2 = nums2.size();
+        // l2 has to be longer
         if (l1 > l2) 
             return findMedian2(nums2, nums1, k);
         
