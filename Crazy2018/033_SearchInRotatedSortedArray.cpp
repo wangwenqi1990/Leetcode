@@ -1,20 +1,17 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        // binary search
-        // computation: O(log(n)) space O(1)
-        // check which branch does the mid belongs to first, then update left, right
-        int left = 0, right = nums.size()-1;       
-        while(left <= right){
-            int mid = left + (right-left)/2; 
-            if(nums[mid]==target) return mid;
-            else if(nums[mid] < nums[right]){
-                if(nums[mid]<target && nums[right]>=target) left = mid+1;
-                else right = mid-1;
+        int l = 0, r = nums.size()-1;   // -1 is necessary
+        while(l<=r){                    // equal needs to be available
+            int m = l+ (r-l)/2;
+            if(nums[m]== target)    return m;
+            if(nums[m]<=nums[r]){       // right part right tail
+                if(target > nums[m] && target <= nums[r]) l=m+1;
+                else r=m-1;
             }
-            else{
-                if(nums[mid]>target && nums[left]<=target) right = mid-1;
-                else left = mid+1;
+            else{                       // left part left tail
+                if(target<nums[m] && target >= nums[l]) r = m-1;
+                else l = m+1;
             }
         }
         return -1;

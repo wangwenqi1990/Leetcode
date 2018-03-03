@@ -1,27 +1,25 @@
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        // queue
         vector<vector<int>> res;
         if(!root) return res;
         queue<TreeNode*> q;
-        q.emplace(root);
-        
+        q.push(root);
         while(!q.empty()){
-            int q_size = q.size();
-            vector<int> layer;
-            for(int i=0; i<q_size; i++){
+            vector<int> r;
+            int n = q.size();
+            for(int i=0; i<n; ++i){
                 TreeNode* tp = q.front(); q.pop();
-                layer.push_back(tp->val);
-                if(tp->left) q.emplace(tp->left);
-                if(tp->right) q.emplace(tp->right);
+                if(tp->left) q.push(tp->left);
+                if(tp->right) q.push(tp->right);
+                r.push_back(tp->val);
             }
-            res.push_back(layer);
+            res.push_back(r);
         }
         return res;
     }
 };
-
+// This solution is slower
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {

@@ -1,18 +1,14 @@
 class Solution {
 public:
     int maxSubArrayLen(vector<int>& nums, int k) {
-        int sum = 0, res = 0;
+        int res = 0, s = 0;
         unordered_map<int, int> m;
-        for (int i = 0; i < nums.size(); ++i) {
-            sum += nums[i];
-            // updating res
-            if (sum == k) 
-                res = i + 1;
-            else if (m.count(sum - k)) 
-                res = max(res, i - m[sum - k]);
-            // update hash by keep the most left results
-            if (!m.count(sum)) 
-                m[sum] = i;
+        m[0]=-1;
+        for(int i=0; i< nums.size(); ++i){
+            s += nums[i];
+            if(s==k)                        res= i+1;// this line for sppeding up
+            else if(m.find(s-k)!=m.end())   res = max(res, i-m[s-k]);
+            if(m.find(s)==m.end())          m[s]=i;
         }
         return res;
     }

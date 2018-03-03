@@ -2,22 +2,29 @@ class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         vector<vector<int>> res;
-        if(nums.size()==0) return res;
-        vector<int> res_tp; res.push_back(res_tp);
+        vector<int> e;
+        res.push_back(e);
         sort(nums.begin(), nums.end());
-        int pre=INT_MAX, pre_size = 0, n = nums.size();
-        for(int i=0; i< n; ++i){
-            // pre_size is the length that does not need to update
-            if(nums[i]!=pre){
-                pre = nums[i];
-                pre_size = res.size();
+        
+        int pre = INT_MAX, pre_cnt=0;
+        for(auto num: nums){
+            int n = res.size();
+            if(num!=pre){
+                // if not duplicated, update all the terms
+                for(int j=0; j<n; ++j){
+                    res.push_back(res[j]);
+                    res.back().push_back(num);
+                }
+                pre_cnt = n;
             }
-            // for each qualified results added, append nums[i]
-            int tot_size = res.size();
-            for(int j=tot_size-pre_size; j< tot_size; ++j ){
-                res.push_back(res[j]);
-                res.back().push_back(nums[i]);
+            else{
+                // if duplicated, only update the most recent updated term
+                for(int j=n-pre_cnt; j<n; ++j){
+                    res.push_back(res[j]);
+                    res.back().push_back(num);
+                }
             }
+            pre = num;
         }
         return res;
     }

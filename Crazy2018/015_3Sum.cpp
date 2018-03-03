@@ -1,42 +1,31 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        // Computation: O(n^2) Space: O(1)
+        // cmoputation: O(n^2) Space: O(1)
         vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        
-        int i=0, n = nums.size();
+        int i=0, n= nums.size();
         while(i<n-2){
-            int l = i+1, r = n-1;
-            int target = -nums[i];
-            // two pointer
-            while(l < r){
-                int tp = nums[l] + nums[r];
-                if(tp == target){
-                    vector<int> tmp;
-                    tmp.push_back(nums[i]);
-                    tmp.push_back(nums[l++]);
-                    tmp.push_back(nums[r--]);
-                    res.push_back(tmp);
-                    while(l<r && nums[l]==tmp[1])
-                        l++;
-                    while(l<r && nums[r]==tmp[2])
-                        r--;
+            int l = i+1, r = n-1, t = - nums[i];
+            while(l<r){
+                int s = nums[l] + nums[r];
+                if(s==t){
+                    vector<int> tba;
+                    tba.push_back(nums[i]);
+                    tba.push_back(nums[l]);
+                    tba.push_back(nums[r]);
+                    res.push_back(tba);
+                    while(l<r && nums[l+1]==nums[l]) ++l;   ++l;
+                    while(l<r && nums[r-1]==nums[r]) --r;   --r;
                 }
-                else if(tp > target){
-                    r--;
-                    while(l<r && nums[r]==nums[r+1])
-                        r--;
+                else if(s<t){
+                    while(l<r && nums[l+1]==nums[l]) ++l;   ++l;
                 }
                 else{
-                    l++;
-                    while(l<r && nums[l] == nums[l-1])
-                        l++;
+                    while(l<r && nums[r-1]==nums[r]) --r;   --r;
                 }
             }
-            i++;
-            while(i< nums.size()-2 && nums[i] == nums[i-1])
-                i++;
+            while(i<n-2 && nums[i+1]==nums[i]) ++i;     ++i;
         }
         return res;
     }

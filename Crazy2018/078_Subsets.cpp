@@ -1,6 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
+        // computation: O(n^2) Space: O(n)
         vector<vector<int>> res;
         vector<int> tp;
         res.push_back(tp);

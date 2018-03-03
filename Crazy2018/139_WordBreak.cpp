@@ -1,25 +1,21 @@
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
-        //  j,...., i
-        // sj,....,si
-        // hash-table
-        int n = s.size();
-        
-        // hash table
+        // computation: O(n^2)  Space: O(n)
         unordered_set<string> h;
-        for(int i=0; i<wordDict.size();i++)
-            h.insert(wordDict[i]);
+        for(auto w: wordDict){
+            h.insert(w);
+        }
         
-        // dp[i] means till the ith word in s,the word can be break or not;
-        bool dp[n+1]={false};
-        dp[0]= true;
+        int n = s.size();
+        bool dp[n+1]={true};
         for(int i=1; i<n+1; i++){
-            for(int j=0; j<i;j++){
-                if(dp[j] && h.find(s.substr(j,i-j))!=h.end())
-                    {dp[i]=true;break;}
+            for(int j=0; j<i; j++){
+                if(dp[j]==true && h.count(s.substr(j, i-j))){
+                    dp[i]=true; break;
+                }
             }
         }
         return dp[n];
-    }  
+    }
 };
