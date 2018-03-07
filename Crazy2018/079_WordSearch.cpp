@@ -25,7 +25,7 @@ public:
             dfs(board, word,visited, idx+1, i+1, j)||
             dfs(board, word,visited, idx+1, i, j-1)||
             dfs(board, word,visited, idx+1, i, j+1);
-        visited[i][j]= false;
+        visited[i][j]= false;       // This line is very important in reseting the visited table
         return res;
     }
 };

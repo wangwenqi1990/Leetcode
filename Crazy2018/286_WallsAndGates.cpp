@@ -1,16 +1,15 @@
 class Solution {
 public:
-    // DFS
     void wallsAndGates(vector<vector<int>>& rooms) {
-        for (int i = 0; i < rooms.size(); ++i) {
-            for (int j = 0; j < rooms[i].size(); ++j) {
-                if (rooms[i][j] == 0) {
+        for(int i=0; i< rooms.size(); ++i){
+            for(int j=0;j<rooms[i].size(); ++j){
+                if(rooms[i][j]==0)
                     dfs(rooms, i, j, 0);
-                }
             }
         }
     }
-    void dfs(vector<vector<int>> &rooms, int i, int j, int val) {
+    void dfs(vector<vector<int>>& rooms, int i, int j, int val){
+        // rooms[i][j] < val consider the scenario of obstacle and closer solution
         if (i < 0 || i >= rooms.size() || j < 0 || j >= rooms[i].size() || rooms[i][j] < val) return;
         rooms[i][j] = val;
         dfs(rooms, i + 1, j, val + 1);

@@ -2,26 +2,29 @@ class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
         vector<int> res;
-        vector<vector<int> > graph(numCourses, vector<int>(0));
-        vector<int> in(numCourses, 0);
-        for (auto &a : prerequisites) {
-            graph[a.second].push_back(a.first);     // for each course a.second, a.first should go first
-            ++in[a.first];                          // how many course after course a.first
-        }
         queue<int> q;
-        for (int i = 0; i < numCourses; ++i) {
-            if (in[i] == 0) q.push(i);          
+        // the cnt vector for the constraint of each class;
+        vector<int> cnt(numCourses, 0);
+        // priority course -> list of courses contrainted by this class, important
+        vector<vector<int>> m(numCourses, vector<int>(0));
+        for(auto &p: prerequisites){
+            m[p.second].push_back(p.first);
+            ++cnt[p.first];
         }
-        while (!q.empty()) {
-            int t = q.front();
-            res.push_back(t);
-            q.pop();
-            for (auto &a : graph[t]) {
-                --in[a];                        // since t has be insert, there should be less courses after a
-                if (in[a] == 0) q.push(a);
+        for(int i=0; i< numCourses; ++i){
+            if(cnt[i]==0)
+                q.push(i);
+        }
+        while(!q.empty()){
+            int tp = q.front(); q.pop();
+            res.push_back(tp);
+            for(auto a: m[tp]){
+                --cnt[a];
+                if(cnt[a]==0)
+                    q.push(a);
             }
         }
-        if (res.size() != numCourses) res.clear();
+        if(res.size()!=numCourses) res.clear();
         return res;
     }
 };

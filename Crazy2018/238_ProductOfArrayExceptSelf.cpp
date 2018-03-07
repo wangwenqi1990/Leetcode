@@ -39,3 +39,24 @@ public:
         return res;
     }
 };
+
+
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        // space: O(n), computation: O(n)
+        vector<int> left, right,res;
+        int l=1, r = 1, n= nums.size();
+        for(int i=0; i<n-1; ++i){
+            l*= nums[i];        r*= nums[n-1-i];
+            left.push_back(l);  right.push_back(r);
+        }
+        for(int i=0; i<n; ++i){
+            if(i==0)    res.push_back(right[n-2]);
+            else if(i==n-1)  res.push_back(left[n-2] );
+            else res.push_back(left[i-1] * right[n-2-i]);
+        }
+        return res;
+    }
+};

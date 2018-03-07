@@ -1,42 +1,25 @@
-#include<iostream>
-#include<vector>
-using namespace std;
-
-struct Interval {
-    int start;
-    int end;
-    Interval() : start(0), end(0) {}
-    Interval(int s, int e) : start(s), end(e) {}
-};
-
 class Solution {
 public:
     int minMeetingRooms(vector<Interval>& intervals) {
-        vector<int> start, end;
-        int n = intervals.size(), res=0, tp=0;
-        for(int i=0; i< n; i++){
-            start.push_back(intervals[i].start);
-            end.push_back(intervals[i].end);
+        // computation: O(nlogn) space: O(n)
+        // construct a start time vector and an end time vector
+        vector<int> s, e;
+        int n = intervals.size();
+        for(auto i: intervals){
+            s.push_back(i.start);
+            e.push_back(i.end);
         }
-        sort(start.begin(), start.end());
-        sort(end.begin(), end.end());
-        for(int i=0; i<n; i++){
-            cout << (start[i]<end[tp]);
-            if(start[i]<end[tp])
-                res++;
-            else
-                tp++;
+        sort(s.begin(), s.end());
+        sort(e.begin(), e.end());
+        // go throuh the vector and updating cnt
+        int cnt=0, res =0, j=0;
+        for(int i=0; i< n; ){
+            if(s[i]<e[j])   {++cnt;++i;}
+            else{
+                res = max(res, cnt);
+                cnt--;++j;
+            }
         }
-        return res;
-        
+        return max(res, cnt);
     }
 };
-
-
-int main(){
-    vector<Interval> intervals;
-    intervals.push_back(Interval(1,3));
-    intervals.push_back(Interval(2,5));
-    intervals.push_back(Interval(4,6));
-    cout << Solution().minMeetingRooms(intervals) << endl;
-}

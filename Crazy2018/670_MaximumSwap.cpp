@@ -2,16 +2,16 @@ class Solution {
 public:
     int maximumSwap(int num) {
         string str = to_string(num);
-        // buckets store the most right location of each digits
-        vector<int> buckets(10, 0);
-        for (int i = 0; i < str.size(); ++i) {
-            buckets[str[i] - '0'] = i;
+        vector<int> candidate(10);
+        // find the location that can offer a large number for swapping
+        for(int i=0; i<str.size();++i){
+            candidate[str[i]-'0']=i;
         }
-        // find the largest digit that is after i and is larger than num[i]
-        for (int i = 0; i < str.size(); ++i) {
-            for (int k = 9; k > str[i] - '0'; --k) {    // larger than num[i]
-                if (buckets[k] <= i) continue;          // after i
-                swap(str[i], str[buckets[k]]);
+        // for each digit try to find a candidate from the candidates that is larger than itself.
+        for(int i=0; i<str.size(); ++i){
+            for(int c=9; c > str[i]-'0'; c--){
+                if(candidate[c] <=i ) continue;
+                swap(str[i], str[candidate[c]]);
                 return stoi(str);
             }
         }

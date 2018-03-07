@@ -1,7 +1,7 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        // queue, harsh-table, BFS
+        // brutforce searching using queue, harsh-table
         unordered_set<string> dict(wordList.begin(), wordList.end());
         unordered_map<string, int> m; // string to count
         queue<string> q;
