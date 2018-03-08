@@ -1,16 +1,17 @@
 class Solution {
 public:
     bool validTree(int n, vector<pair<int, int>>& edges) {
-        vector<int> roots(n, -1);
-        for (auto a : edges) {
-            int x = find(roots, a.first), y = find(roots, a.second);
-            if (x == y) return false;
-            roots[x] = y;
+        if (edges.size()!=(n-1))    return false;   // n nodes need to have n-1 edges
+        vector<int> guid(n, -1);
+        for(auto e: edges){
+            int start = find(guid, e.first), end = find(guid, e.second);
+            if(start == end)    return false;
+            guid[start]=end;
         }
-        return edges.size() == n - 1;
+        return true;
     }
-    int find(vector<int> &roots, int i) {
-        while (roots[i] != -1) i = roots[i];
-        return i;
+    int find(vector<int>& guid, int e){
+        while(guid[e]!=-1)  e= guid[e];
+        return e;
     }
 };

@@ -2,18 +2,13 @@ class Solution {
 public:
     int hIndex(vector<int>& citations) {
         int n = citations.size();
-        int left = 0, right = n-1;
-        // min i s.t. n-i >= citations[i]
-        // this equal is important
-        while(left <= right){   
-            int mid = left + (right-left)/2;
-            if(n-mid ==citations[mid])
-                return n-mid;
-            else if(n-mid <citations[mid])
-                right = mid-1;
-            else
-                left = mid+1;
+        if(n==0)    return 0;
+        int l=0, r= n-1;
+        while(l<r){
+            int m = l+(r-l)/2;
+            if(citations[m]>=n-m)   r = m;
+            else                    l = m+1;
         }
-        return  n-left;
+        return min(n-r, citations[r]);
     }
 };

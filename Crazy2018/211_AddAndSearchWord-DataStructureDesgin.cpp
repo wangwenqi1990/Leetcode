@@ -6,7 +6,7 @@ public:
         TrieNode *child[26];
         bool isWord;
         TrieNode() : isWord(false) {
-            for (auto &a : child) a = NULL;
+            for (auto &a : child) a = NULL;                                     // address is very important to speed up
         }
     };
     
@@ -17,7 +17,7 @@ public:
     // Adds a word into the data structure.
     void addWord(string word) {
         TrieNode *p = root;
-        for (auto &a : word) {
+        for (auto &a : word) {                                                  // address is very important to speed up
             int i = a - 'a';
             if (!p->child[i]) p->child[i] = new TrieNode();
             p = p->child[i];
@@ -34,7 +34,7 @@ public:
     bool searchWord(string &word, TrieNode *p, int i) {
         if (i == word.size()) return p->isWord;
         if (word[i] == '.') {
-            for (auto &a : p->child) {
+            for (auto &a : p->child) {                                          // address is very important to speed up
                 if (a && searchWord(word, a, i + 1)) return true;
             }
             return false;

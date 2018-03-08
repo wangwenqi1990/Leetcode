@@ -1,6 +1,7 @@
 class NestedIterator {
 public:
     NestedIterator(vector<NestedInteger> &nestedList) {
+        // reversed order
         for(int i = nestedList.size() - 1; i >= 0; --i){
             s.push(nestedList[i]);
         }
@@ -16,6 +17,7 @@ public:
             NestedInteger t = s.top();
             if(t.isInteger()) return true;
             s.pop();
+            // reversed order
             for(int i = t.getList().size() - 1; i >= 0; --i)
                 s.push(t.getList()[i]);
         }

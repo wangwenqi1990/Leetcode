@@ -1,11 +1,17 @@
 class Solution {
 public:
     int hIndex(vector<int>& citations) {
-        sort(citations.begin(), citations.end(), greater<int>()); //O(nlogn)      
-        //O(n)
-        for (int i = 0; i < citations.size(); ++i) {
-            if (i >= citations[i]) return i;
+        int n = citations.size(); if(n==0) return 0;
+        // O(nlogn)
+        sort(citations.begin(), citations.end());
+        int l = 0, r=n-1;
+        // max l s.t. nums[l] >= n-l
+        // O(logn)
+        while(l<r){
+            int m = l + (r-l)/2;
+            if(citations[m]>=n-m) r = m;
+            else                  l = m +1;
         }
-        return citations.size();
+        return min(n-r, citations[r]);
     }
 };
