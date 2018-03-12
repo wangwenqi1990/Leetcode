@@ -43,22 +43,17 @@ public:
         return lists[0];
     }
     
-    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
-        // O(min(m, n))
-        ListNode *head = new ListNode(-1);
-        ListNode *cur = head;
-        while (l1 && l2) {
-            if (l1->val < l2->val) {
-                cur->next = l1;
-                l1 = l1->next;
-            } else {
-                cur->next = l2;
-                l2 = l2->next;
-            }
-            cur = cur->next;
+    ListNode* merge2Lists(ListNode* l1, ListNode* l2){
+        // computation: O(min(m,n)), space: O(1)
+        ListNode    *head = new ListNode(-1), *cur = head;
+        while(l1 && l2){
+            if(l1->val < l2->val)   {cur->next = l1; l1=l1->next;}
+            else                    {cur->next = l2; l2=l2->next;}
+            cur= cur->next;
         }
-        if (l1) cur->next = l1; // two lines can not be replaced by if ... else...
-        if (l2) cur->next = l2; // for scenairo of [[],[]]
+        if(l1)     cur->next = l1;
+        else       cur->next = l2;
         return head->next;
+    }
     }
 };

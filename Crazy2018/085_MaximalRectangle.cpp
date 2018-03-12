@@ -1,36 +1,28 @@
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
-        // refer this as m problem, and each is Largest Rectangle in Histogram;
-        int m = matrix.size();  if(m==0) return 0;
-        int n=matrix[0].size(); if(n==0) return 0;
-        int res = 0;
-        for(int i=0; i<m;i++){
-            vector<int> tp(n,0);
-            for(int j=0; j<n; j++){
-                if(matrix[i][j]=='1'){
-                    int tmp =1;
-                    for(int z=i-1;z>=0;z--){
-                        if(matrix[z][j]=='1')   tmp++;
-                        else break;
-                    }
-                    tp[j]=tmp;
-                }
+        // computation: O(mn^2) space: O(n)
+        int m = matrix.size();      if(m==0) return 0;
+        int n = matrix[0].size();   if(n==0) return 0;
+        int res =0;
+        vector<int> dp(n, 0);
+        for(int i=0; i<m; ++i){
+            for(int j=0; j<n; ++j){
+                if(matrix[i][j]=='1')   dp[j]+=1;
+                else                    dp[j]=0;
             }
-            res = max(res, maxR(tp)); 
+            res = max(res, maxR(dp) );
         }
         return res;
     }
-    
-    int maxR(vector<int> h){
-        // computation: O(n^2), space: O(1)
-        int n= h.size(), res=0;
-        for(int i=0; i< n; i++){
-            if(i+1< n && h[i+1]>=h[i])
-                continue;
-            int minH = h[i];
-            for(int j=i;j>=0;j--){
-                minH=min(minH, h[j]);
+    int maxR(vector<int>& heights) {
+        // Computation: O(n^2) Space: O(1)
+        int n = heights.size(), res =0;
+        for(int i=0; i< n; ++i){
+            if(i+1<n && heights[i]<=heights[i+1])   continue;
+            int minH = heights[i];
+            for(int j=i; j>=0; --j){
+                minH = min(minH, heights[j]);
                 res = max(res, (i-j+1) * minH);
             }
         }
@@ -42,6 +34,7 @@ public:
 class Solution {
 public:
 int maximalRectangle(vector<vector<char> > &matrix) {
+    // computation: O(mn), space: O(n)
     // centered with matrix[i][j]
     // height[i][j],    the height above matrix[i][j]
     // right[i][j],     considering the row before, the right index of 1

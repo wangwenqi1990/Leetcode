@@ -1,7 +1,9 @@
 class Solution {
 public:
     vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings) {
+        // computation: O(n) Space: O(n)
         vector<pair<int, int>> h, res;
+        // Multisets are containers that store elements following a specific order, and where multiple elements can have equivalent values.
         multiset<int> m;
         int pre = 0, cur = 0;
         // h is a candidate pool including both left and right edge

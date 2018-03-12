@@ -1,7 +1,7 @@
 class Solution {
 public:
     string numberToWords(int num) {
-        string res = convertHundred(num % 1000);
+        string res = convertHundred(num % 1000);    // less than 1000 components
         vector<string> v = {"Thousand", "Million", "Billion"};
         for (int i = 0; i < 3; ++i) {
             num /= 1000;
