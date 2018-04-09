@@ -1,19 +1,19 @@
+// reference: http://bookshadow.com/weblog/2015/09/28/leetcode-find-duplicate-number/
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        // similar to 142 Linked List Cycle II
-        // Computation: O(n)
-        // Space: O(1)
-        int s = nums[0];
-        int f = nums[s];
-        while(s!=f){
-            s=nums[s];
-            f=nums[nums[f]];
+        // computation: O(n)
+        // space: O(1)
+        int l = 0, r = 0, m= 0, s=0;
+        while(true){
+            l = nums[l];
+            r = nums[nums[r]];
+            if(l==r) break;
         }
-        f=0;
-        while(s!=f){
-            s=nums[s];
-            f=nums[f];
+        while(true){
+            l = nums[l];
+            s = nums[s];
+            if(s==l) break;
         }
         return s;
     }
@@ -22,19 +22,18 @@ public:
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        // fact: n should have n numbers less or euqal to it
-        int n = nums.size();
-        int right = n, left = 1;
-        
-        while(left < right){
-            int mid = left + 0.5 *(right-left);
+        // computation: O(nlogn)
+        // space: O(1)
+        int l = 1, r = nums.size();
+        while(l<r){
+            int m = l+ (r-l)/2;
             int cnt = 0;
-            for(int i=0; i<n; i++){
-                if(nums[i]<=mid) cnt++;
+            for(auto t: nums){
+                if(t<= m) ++cnt;// m not nums[m]
             }
-            if(cnt<=mid) left = mid+1;
-            else right = mid;
+            if(cnt>m) r = m;
+            else      l = m+1;
         }
-        return left;
+        return l;
     }
 };
